@@ -7,7 +7,7 @@ void main()
 	//Matrix<double> A;
 	A.MatInput();
 	A.ChangeToTight();
-	A.GilbertMat();
+	//A.GilbertMat();
 	A.Gauss();
 	A.LLt();
 	A.calc_y();

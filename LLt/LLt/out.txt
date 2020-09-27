@@ -1,0 +1,16 @@
+The size of matrix is: 3x3
+Elements of DI: [1 5 11 ]
+Elements of AL: [1 1 3 ]
+Elements of IA: [0 0 1 3 ]
+Elements of B: [3 9 15 ]
+Tight matrix:
+1 1 1 
+1 5 3 
+1 3 11 
+
+Calc by Gauss method:
+x = [1 1 1 ]
+Calc Y by LLT method:
+y = [3 3 3 ]
+Calc X by LLT method:
+x = [1 1 1 ]

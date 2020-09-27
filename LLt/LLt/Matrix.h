@@ -35,6 +35,7 @@ template <class T>
 void Matrix<T>::MatInput()
 {
 	ifstream fsize, fdi, fal, fia, fb;
+	ofstream fout;
 	T tal, tdi, tb;
 	int tia;
 	cout << "Open files..." << endl;
@@ -43,24 +44,26 @@ void Matrix<T>::MatInput()
 	fal.open("fal.txt");
 	fia.open("fia.txt");
 	fb.open("fb.txt");
+	fout.open("out.txt");
 	cout << "Done." << endl;
 
 	fsize >> N;
 	cout << N << endl;
-	/*
-	for (fal >> tal; !fal.eof(); fal >> tal)
+
+	while (fal >> tal)
 		al.push_back(tal);
 	cout << "al=" << al.size() << endl;
-	for (fia >> tia; !fia.eof(); fia >> tia)
+	while (fia >> tia)
 		ia.push_back(tia);
 	cout << "ia=" << ia.size() << endl;
-	for (fdi >> tdi; !fdi.eof(); fdi >> tdi)
+	while (fdi >> tdi)
 		di.push_back(tdi);
 	cout << "di=" << di.size() << endl;
-	for (fb >> tb; !fb.eof(); fb >> tb)
+	while (fb >> tb)
 		b.push_back(tb);
 	cout << "b=" << b.size() << endl;
-	*/
+	
+	/*
 	for (int i = 0; i < 3; i++)
 	{
 		fal >> tal;
@@ -88,16 +91,35 @@ void Matrix<T>::MatInput()
 		b.push_back(tb);
 		cout << "b=" << tb << endl;
 	}
-
+	*/
 	x.resize(N);
 	y.resize(N);
 	f.resize(N);
+
+	fout << "The size of matrix is: " << N << "x" << N << endl;
+	fout << "Elements of DI: [";
+	for (int i = 0; i < di.size(); i++)
+		fout << di[i] << " ";
+	fout << "]" << endl;
+	fout << "Elements of AL: [";
+	for (int i = 0; i < al.size(); i++)
+		fout << al[i] << " ";
+	fout << "]" << endl;
+	fout << "Elements of IA: [";
+	for (int i = 0; i < ia.size(); i++)
+		fout << ia[i] << " ";
+	fout << "]" << endl;
+	fout << "Elements of B: [";
+	for (int i = 0; i < b.size(); i++)
+		fout << b[i] << " ";
+	fout << "]" << endl;
 
 	fsize.close();
 	fdi.close();
 	fal.close();
 	fia.close();
 	fb.close();
+	fout.close();
 }
 
 template <class T>
@@ -107,8 +129,6 @@ void Matrix<T>::LLt()
 	di[0] = sqrt(di[0]);
 	for (int i = 1; i < N; i++)
 	{
-		cout << "------------------" << endl;
-		cout << "i = " << i << endl;
 		int i_first = ia[i];
 		int i_last = ia[i + 1];
 		int nCol = i - (i_last - i_first);
@@ -132,8 +152,6 @@ void Matrix<T>::LLt()
 				sumal += al[ki] * al[kj];
 				cout << al[ki] << " * " << al[kj] << endl;
 			}
-			cout << "sumal = " << sumal << endl;
-			cout << "a = " << al[k] << endl;
 			al[k] = (al[k] - sumal) / di[nCol];
 			sumdi += al[k] * al[k];
 		}
@@ -144,6 +162,9 @@ void Matrix<T>::LLt()
 template <class T>
 void Matrix<T>::calc_y()
 {
+	ofstream fout;
+	fout.open("out.txt", ios::app);
+	fout << "Calc Y by LLT method:" << endl;
 	for (int i = 0; i < N; i++)
 	{
 		int i0 = ia[i];
@@ -157,16 +178,25 @@ void Matrix<T>::calc_y()
 		y[i] = (b[i] - sum) / di[i];
 	}
 	cout << "y:" << endl;
+	fout << "y = [";
 
 	for (int i = 0; i < N; i++)
+	{
 		cout << y[i] << endl;
+		fout << y[i] << " ";
+	}
 
+	fout << "]" << endl;
+	fout.close();
 	cout << endl;
 }
 
 template <class T>
 void Matrix<T>::calc_x()
 {
+	ofstream fout;
+	fout.open("out.txt", ios::app);
+	fout << "Calc X by LLT method:" << endl;
 	for (int i = N - 1; i >= 0; i--)
 	{
 		int i0 = ia[i];
@@ -177,20 +207,24 @@ void Matrix<T>::calc_x()
 			y[j] -= al[k] * xi;
 		x[i] = xi;
 	}
-	fstream out_x;
-	out_x.open("output_x.txt", 'w');
 	cout << "Writing x..." << endl;
+	fout << "x = [";
 	for (int i = 0; i < N; i++)
 	{
-		out_x << x[i] << endl;
+		fout << x[i] << " ";
 		cout << x[i] << endl;
 	}
+	fout << "]" << endl;
+	fout.close();
 	cout << "Done." << endl;
 }
 
 template <class T>
 void Matrix<T>::ChangeToTight()
 {
+	ofstream fout;
+	fout.open("out.txt", ios::app);
+	fout << "Tight matrix:" << endl;
 	tightMat.resize(N, vector<T>(N));
 	for (auto& i : tightMat)
 		fill(i.begin(), i.end(), 0);
@@ -206,10 +240,16 @@ void Matrix<T>::ChangeToTight()
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
+		{
+			fout << tightMat[i][j] << " ";
 			cout << tightMat[i][j] << " ";
+		}
+		fout << endl;
 		cout << endl;
 	}
+	fout << endl;
 	cout << endl;
+	fout.close();
 }
 
 template <class T>
@@ -289,6 +329,9 @@ void Matrix<T>::ChangeToProf() // перевод матрицы в профильный формат
 template <class T>
 void Matrix<T>::Gauss() // метод гауcса обычный
 {
+	ofstream fout;
+	fout.open("out.txt", ios::app);
+	fout << "Calc by Gauss method:" << endl;
 	for (int i = 0; i < N; i++)
 		f[i] = b[i];
 
@@ -313,7 +356,12 @@ void Matrix<T>::Gauss() // метод гауcса обычный
 	}
 
 	cout << endl;
-
+	fout << "x = [";
 	for (int i = 0; i < N; i++)
+	{
+		fout << f[i] << " ";
 		cout << f[i] << endl;
+	}
+	fout << "]" << endl;
+	fout.close();
 }
