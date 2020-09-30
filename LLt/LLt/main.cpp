@@ -8,6 +8,7 @@ void main()
 	A.MatInput();
 	A.ChangeToTight();
 	//A.GilbertMat();
+	//A.ChangeToProf();
 	A.Gauss();
 	A.LLt();
 	A.calc_y();

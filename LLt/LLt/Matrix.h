@@ -63,35 +63,6 @@ void Matrix<T>::MatInput()
 		b.push_back(tb);
 	cout << "b=" << b.size() << endl;
 	
-	/*
-	for (int i = 0; i < 3; i++)
-	{
-		fal >> tal;
-		al.push_back(tal);
-		cout << "al=" << tal << endl;
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		fia >> tia;
-		ia.push_back(tia);
-		cout << "ia=" << tia << endl;
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		fdi >> tdi;
-		di.push_back(tdi);
-		cout << "di=" << tdi << endl;
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		fb >> tb;
-		b.push_back(tb);
-		cout << "b=" << tb << endl;
-	}
-	*/
 	x.resize(N);
 	y.resize(N);
 	f.resize(N);
@@ -273,7 +244,6 @@ void Matrix<T>::GilbertMat() // построение матрицы гильберта
 			tightMat[i][j] = (T)1.0 / (i + j + 1);
 	}
 	GilbertVec();
-	//output
 }
 
 template <class T>
