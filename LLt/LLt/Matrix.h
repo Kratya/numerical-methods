@@ -104,11 +104,12 @@ void Matrix<T>::LLt()
 		int i_last = ia[i + 1];
 		int nCol = i - (i_last - i_first);
 		T sumdi = 0;
-		for (int k = i_first; k < i_last; k++, nCol++)
+		int nColbuf = nCol;
+		for (int k = i_first; k < i_last; k++, nColbuf)
 		{
-			int j_first = ia[nCol];
-			int j_last = ia[nCol + 1];
-			int nRow = nCol - (j_last - j_first);
+			int j_first = ia[nColbuf];
+			int j_last = ia[nColbuf + 1];
+			int nRow = nColbuf - (j_last - j_first);
 			int ki = i_first;
 			int kj = j_first;
 			sumal = 0;

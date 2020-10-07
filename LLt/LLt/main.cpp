@@ -11,6 +11,7 @@ void main()
 	//A.ChangeToProf();
 	A.Gauss();
 	A.LLt();
+	//A.ChangeToTight();
 	A.calc_y();
 	A.calc_x();
 }
