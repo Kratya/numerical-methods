@@ -104,25 +104,41 @@ void Matrix<T>::LLt()
 		int i_last = ia[i + 1];
 		int nCol = i - (i_last - i_first);
 		T sumdi = 0;
-		int nColbuf = nCol;
-		for (int k = i_first; k < i_last; k++, nColbuf)
+		//int nColbuf = nCol;
+		for (int k = i_first; k < i_last; k++, nCol++)
 		{
-			int j_first = ia[nColbuf];
-			int j_last = ia[nColbuf + 1];
-			int nRow = nColbuf - (j_last - j_first);
+			int j_first = ia[nCol];
+			int j_last = ia[nCol + 1];
+			int nRow = nCol - (j_last - j_first);
+			int ti = i_first;
+			int tj = j_first;
+			/*
 			int ki = i_first;
 			int kj = j_first;
 			sumal = 0;
 
-			if (nRow <= nCol)
+			if (nRow <= nCol) //<=
 				ki += nRow - nCol;
 			else
 				kj += nCol - nRow;
 
-			for (; kj < j_last; ki++, kj++)
+			*/
+			int ki = k - i_first;
+			int kj = j_last - j_first;
+			sumal = 0;
+
+			if (kj > ki)
+				tj -= ki - kj;
+			else
 			{
-				sumal += al[ki] * al[kj];
-				cout << al[ki] << " * " << al[kj] << endl;
+				nRow += ki - kj;
+				ti += ki - kj;
+			}
+
+			for (; ti < k; ti++, tj++)
+			{
+				sumal += al[ti] * al[tj];
+				//cout << al[ki] << " * " << al[kj] << endl;
 			}
 			al[k] = (al[k] - sumal) / di[nCol];
 			sumdi += al[k] * al[k];

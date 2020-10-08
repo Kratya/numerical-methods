@@ -9,7 +9,9 @@ void main()
 	A.ChangeToTight();
 	//A.GilbertMat();
 	//A.ChangeToProf();
+	cout << "Gauss" << endl;
 	A.Gauss();
+	cout << "LLt" << endl;
 	A.LLt();
 	//A.ChangeToTight();
 	A.calc_y();
