@@ -3,8 +3,8 @@
 void main()
 {
 	setlocale(LC_CTYPE, "Russian");
-	Matrix<float> A;
-	//Matrix<double> A;
+	//Matrix<float> A;
+	Matrix<double> A;
 	A.MatInput();
 	A.ChangeToTight();
 	//A.GilbertMat();

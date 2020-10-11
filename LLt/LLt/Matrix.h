@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <vector>
 
@@ -45,6 +46,7 @@ void Matrix<T>::MatInput()
 	fia.open("fia.txt");
 	fb.open("fb.txt");
 	fout.open("out.txt");
+	fout.precision(5);
 	cout << "Done." << endl;
 
 	fsize >> N;
@@ -151,7 +153,10 @@ template <class T>
 void Matrix<T>::calc_y()
 {
 	ofstream fout;
+	//fout.precision(15);
 	fout.open("out.txt", ios::app);
+	fout << fixed;
+	fout << setprecision(15);
 	fout << "Calc Y by LLT method:" << endl;
 	for (int i = 0; i < N; i++)
 	{
@@ -183,7 +188,10 @@ template <class T>
 void Matrix<T>::calc_x()
 {
 	ofstream fout;
+	//fout.precision(15);
 	fout.open("out.txt", ios::app);
+	fout << fixed;
+	fout << setprecision(15);
 	fout << "Calc X by LLT method:" << endl;
 	for (int i = N - 1; i >= 0; i--)
 	{
@@ -211,7 +219,10 @@ template <class T>
 void Matrix<T>::ChangeToTight()
 {
 	ofstream fout;
+	//fout.precision(15);
 	fout.open("out.txt", ios::app);
+	fout << fixed;
+	fout << setprecision(15);
 	fout << "Tight matrix:" << endl;
 	tightMat.resize(N, vector<T>(N));
 	for (auto& i : tightMat)
@@ -317,6 +328,9 @@ template <class T>
 void Matrix<T>::Gauss() // метод гауcса обычный
 {
 	ofstream fout;
+	//fout.precision(15);
+	fout << fixed;
+	fout << setprecision(15);
 	fout.open("out.txt", ios::app);
 	fout << "Calc by Gauss method:" << endl;
 	for (int i = 0; i < N; i++)
