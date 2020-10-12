@@ -7,13 +7,12 @@ void main()
 	Matrix<double> A;
 	A.MatInput();
 	A.ChangeToTight();
-	//A.GilbertMat();
-	//A.ChangeToProf();
+	A.GilbertMat();
+	A.ChangeToProf();
 	cout << "Gauss" << endl;
 	A.Gauss();
 	cout << "LLt" << endl;
 	A.LLt();
-	//A.ChangeToTight();
 	A.calc_y();
 	A.calc_x();
 }

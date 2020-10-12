@@ -15,8 +15,8 @@ private:
 	vector<T> al;
 	vector<int> ia;
 	vector<T> b;
-	vector<T> x;
-	vector<T> y;
+	//vector<T> x;
+	//vector<T> y;
 	vector<T> f;
 	vector<vector<T>> tightMat;
 public:
@@ -50,23 +50,43 @@ void Matrix<T>::MatInput()
 	cout << "Done." << endl;
 
 	fsize >> N;
-	cout << N << endl;
+	cout << "N =  " << N << endl;
+	ia.resize(N + 1);
+	b.resize(N);
+	di.resize(N);
+	int j = 0;
 
-	while (fal >> tal)
-		al.push_back(tal);
-	cout << "al=" << al.size() << endl;
+	j = 0;
 	while (fia >> tia)
-		ia.push_back(tia);
-	cout << "ia=" << ia.size() << endl;
-	while (fdi >> tdi)
-		di.push_back(tdi);
-	cout << "di=" << di.size() << endl;
-	while (fb >> tb)
-		b.push_back(tb);
-	cout << "b=" << b.size() << endl;
+	{
+		ia[j] = tia;
+		j++;
+	}
 	
-	x.resize(N);
-	y.resize(N);
+	j = 0;
+	while (fdi >> tdi)
+	{
+		di[j] = tdi;
+		j++;
+	}
+	
+	j = 0;
+	while (fb >> tb)
+	{
+		b[j] = tb;
+		j++;
+	}
+
+	al.resize(ia[N]);
+	j = 0;
+	while (fal >> tal)
+	{
+		al[j] = tal;
+		j++;
+	}
+	
+	//x.resize(N);
+	//y.resize(N);
 	f.resize(N);
 
 	fout << "The size of matrix is: " << N << "x" << N << endl;
@@ -166,17 +186,17 @@ void Matrix<T>::calc_y()
 		T sum = 0;
 
 		for (int k = i0; k < i1; k++, j++)
-			sum += al[k] * y[j];
+			sum += al[k] * b[j];
 
-		y[i] = (b[i] - sum) / di[i];
+		b[i] = (b[i] - sum) / di[i];
 	}
 	cout << "y:" << endl;
 	fout << "y = [";
 
 	for (int i = 0; i < N; i++)
 	{
-		cout << y[i] << endl;
-		fout << y[i] << " ";
+		cout << b[i] << endl;
+		fout << b[i] << " ";
 	}
 
 	fout << "]" << endl;
@@ -198,17 +218,17 @@ void Matrix<T>::calc_x()
 		int i0 = ia[i];
 		int i1 = ia[i + 1];
 		int j = i - (i1 - i0);
-		T xi = y[i] / di[i];
+		T xi = b[i] / di[i];
 		for (int k = i0; k < i1; k++, j++)
-			y[j] -= al[k] * xi;
-		x[i] = xi;
+			b[j] -= al[k] * xi;
+		b[i] = xi;
 	}
 	cout << "Writing x..." << endl;
 	fout << "x = [";
 	for (int i = 0; i < N; i++)
 	{
-		fout << x[i] << " ";
-		cout << x[i] << endl;
+		fout << b[i] << " ";
+		cout << b[i] << endl;
 	}
 	fout << "]" << endl;
 	fout.close();
@@ -256,7 +276,7 @@ void Matrix<T>::GilbertVec()
 {
 	for (int i = 0; i < N; i++)
 	{
-		T sum = 0;
+		double sum = 0;
 		for (int k = 0; k < N; k++)
 			sum += tightMat[i][k] * (k + 1);
 		b[i] = sum;
@@ -269,7 +289,7 @@ void Matrix<T>::GilbertMat() // построение матрицы гильберта
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
-			tightMat[i][j] = (T)1.0 / (i + j + 1);
+			tightMat[i][j] = (double)1.0 / (i + j + 1);
 	}
 	GilbertVec();
 }
